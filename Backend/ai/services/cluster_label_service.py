@@ -8,17 +8,29 @@ def generate_cluster_label(cluster):
     try:
         # Take top 3 headlines
         headlines = [a["title"] for a in cluster["articles"][:3]]
+        print("HEADLINES SENT TO GEMINI:")
+        for a in cluster["articles"][:5]:
+            print("-", a["title"])
 
         headlines_text = "\n".join(headlines)
 
         prompt = f"""
-        You are analyzing media framing.
+        You are analyzing media framing patterns.
 
-        Based on these headlines, give a concise 3–5 word label that captures the dominant narrative angle.
+        Below are headlines from one narrative cluster:
 
-        Avoid generic phrases like "General Narrative".
-        Be specific about framing (e.g., Policy Debate, Industry Expansion, Safety Concerns, Political Conflict).
+        {formatted_headlines}
+
+        Your task:
+        1. Identify the dominant framing angle.
+        2. Provide a concise 3-5 word label.
+        3. Avoid generic phrases like "General Narrative".
+        4. Be specific (e.g., "AI Policy Debate", "Tech Industry Expansion", "Safety & Regulation Concerns", "Military Escalation Framing").
+
+        Return ONLY the label.
         """
+
+        
 
         response = client.models.generate_content(
             model="gemini-flash-latest",

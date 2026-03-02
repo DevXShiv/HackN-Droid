@@ -1,14 +1,182 @@
+/* ===== Home Page Layout ===== */
+.home-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ===== Left Panel — Branding (65%) ===== */
+.home-left {
+    flex: 0 0 65%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 40%, #24243e 100%);
+    position: relative;
+    padding: 60px;
+    overflow: hidden;
+}
+
+.branding-content {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+}
+
+.logo-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    background: rgba(102, 126, 234, 0.15);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 50px;
+    color: #a5b4fc;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    backdrop-filter: blur(4px);
+}
+
+.branding-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.branding-content h1 span {
+    background: linear-gradient(90deg, #667eea, #a78bfa, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.branding-content p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 440px;
+}
+
+/* ===== Glow Mesh Decorative Element ===== */
+.glow-mesh {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle at center,
+            rgba(102, 126, 234, 0.12) 0%,
+            rgba(167, 139, 250, 0.06) 40%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    animation: meshPulse 6s ease-in-out infinite;
+}
+
+@keyframes meshPulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 1;
+    }
+}
+
+/* Extra ambient orbs for depth */
+.home-left::before,
+.home-left::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.home-left::before {
+    width: 300px;
+    height: 300px;
+    top: -80px;
+    right: -60px;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.1), transparent 70%);
+    animation: floatOrb 8s ease-in-out infinite;
+}
+
+.home-left::after {
+    width: 250px;
+    height: 250px;
+    bottom: -60px;
+    left: -40px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.12), transparent 70%);
+    animation: floatOrb 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatOrb {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-30px) scale(1.08);
+    }
+}
+
+/* ===== Right Panel — Auth (35%) ===== */
+.home-right {
+    flex: 0 0 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fb;
+    padding: 40px 30px;
+    position: relative;
+}
+
+/* Override auth-wrapper inside home page so it doesn't hijack layout */
+.home-right .auth-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+    .branding-content h1 {
+        font-size: 38px;
+    }
+
+    .home-left {
+        padding: 40px;
+    }
+}
+
 @media (max-width: 900px) {
     .home-container {
         flex-direction: column;
     }
 
     .home-left {
-        display: none; /* hide left side on mobile */
+        display: none;
     }
 
     .home-right {
         flex: 1;
         width: 100%;
+        min-height: 100vh;
     }
 }

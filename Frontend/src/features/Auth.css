@@ -1,44 +1,24 @@
-/* Layout Wrapper */
-
-body {
-    margin: 0;
-    height: 100vh;
-}
-
-.auth-wrapper {
-    display: flex;
-    height: 100vh;
-}
-
-.auth-left {
-    width: 65%;
-}
-
-.auth-right {
-    width: 35%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
+/* ===== Auth Card ===== */
 .auth-card {
-    width: 90%;
+    width: 100%;
     max-width: 380px;
-    padding: 30px;
-    border-radius: 8px;
+    padding: 36px 32px;
+    border-radius: 16px;
     background: #ffffff;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.5s ease-out;
 }
 
 /* Title */
 .auth-card h2 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #333;
+    margin-bottom: 28px;
+    color: #1a1a2e;
+    font-size: 24px;
+    font-weight: 700;
 }
 
 /* Form Group */
-
 .form-group {
     display: flex;
     flex-direction: column;
@@ -53,49 +33,61 @@ body {
 }
 
 .form-group input {
-    padding: 10px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 11px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     font-size: 14px;
+    background: #f9fafb;
     transition: all 0.3s ease;
 }
 
 .form-group input:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.15);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
 }
 
+/* Button */
 .auth-btn {
     width: 100%;
     padding: 12px;
-    background-color: #667eea;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 4px;
 }
 
 .auth-btn:hover {
-    background-color: #5563d1;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
 }
 
+.auth-btn:active {
+    transform: translateY(0);
+}
+
+/* Toggle Text */
 .toggle-text {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 22px;
     color: #667eea;
     cursor: pointer;
     font-size: 14px;
+    transition: color 0.2s ease;
 }
 
 .toggle-text:hover {
+    color: #764ba2;
     text-decoration: underline;
 }
 
+/* Error */
 .error {
     color: #e63946;
     font-size: 12px;
@@ -108,9 +100,9 @@ body {
         opacity: 0;
         transform: translateY(15px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
-
