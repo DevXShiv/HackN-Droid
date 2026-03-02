@@ -12,13 +12,12 @@ def generate_cluster_label(cluster):
         headlines_text = "\n".join(headlines)
 
         prompt = f"""
-        Give a concise 5-word label summarizing the common theme 
-        of these headlines.
+        You are analyzing media framing.
 
-        Headlines:
-        {headlines_text}
+        Based on these headlines, give a concise 3–5 word label that captures the dominant narrative angle.
 
-        Only return the label. No explanation.
+        Avoid generic phrases like "General Narrative".
+        Be specific about framing (e.g., Policy Debate, Industry Expansion, Safety Concerns, Political Conflict).
         """
 
         response = client.models.generate_content(
