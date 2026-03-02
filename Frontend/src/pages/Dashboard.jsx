@@ -8,14 +8,15 @@ import SourceDonut from "../features/visualizations/SourceDonut";
 import SentimentBars from "../features/visualizations/SentimentBars";
 import BiasHeatmap from "../features/visualizations/BiasHeatmap";
 import MediaGallery from "../features/visualizations/MediaGallery";
+import SummaryPanel from "../features/visualizations/SummaryPanel";
 
 const SUGGESTED_TOPICS = [
-  { label: "AI Regulation", icon: "🤖" },
-  { label: "Climate Policy", icon: "🌍" },
-  { label: "Tech Layoffs", icon: "📉" },
-  { label: "Space Exploration", icon: "🚀" },
-  { label: "Cybersecurity", icon: "🔒" },
-  { label: "Global Elections", icon: "🗳️" },
+  "AI Regulation",
+  "Climate Policy",
+  "Tech Layoffs",
+  "Space Exploration",
+  "Cybersecurity",
+  "Global Elections",
 ];
 
 export default function Dashboard() {
@@ -45,43 +46,52 @@ export default function Dashboard() {
 
       {/* Results */}
       {data && !loading && data.clusters && data.clusters.length > 0 && (
-        <div className="dash-results">
-          {/* Row 1: Cluster Graph (full width) */}
-          <ClusterGraph nodes={data.graph_nodes} />
+        <div className="dash-results-split">
+          {/* LEFT: Visualizations */}
+          <div className="dash-left">
+            <div className="dash-section-label">Overview</div>
+            <div className="dash-row-overview">
+              <div className="panel dash-panel-summary">
+                <SummaryPanel summary={data.summary} />
+              </div>
+              <div className="panel dash-panel-donut-sm">
+                <SourceDonut clusters={data.clusters} />
+              </div>
+            </div>
 
-          {/* Media Gallery */}
-          <div className="panel dash-panel-full">
-            <MediaGallery clusters={data.clusters} />
-          </div>
+            <div className="dash-section-label">Cluster Visualization</div>
+            <ClusterGraph nodes={data.graph_nodes} />
 
-          {/* Row 2: Intelligence + Source Donut */}
-          <div className="dash-row-2">
-            <div className="panel dash-panel-intel">
+            <div className="dash-section-label">Sentiment & Analysis</div>
+            <div className="dash-row-sentiment">
+              <div className="panel dash-panel-flex">
+                <SentimentGauges clusters={data.clusters} />
+              </div>
+              <div className="panel dash-panel-flex">
+                <SentimentBars clusters={data.clusters} />
+              </div>
+            </div>
+
+            <div className="panel dash-panel-full">
               <IntelligencePanel clusters={data.clusters} />
             </div>
-            <div className="panel dash-panel-donut">
-              <SourceDonut clusters={data.clusters} />
+
+            <div className="dash-section-label">Bias & Media</div>
+            <div className="panel dash-panel-full">
+              <BiasHeatmap clusters={data.clusters} />
+            </div>
+            <div className="panel dash-panel-full">
+              <MediaGallery clusters={data.clusters} />
             </div>
           </div>
 
-          {/* Row 3: Sentiment Gauges + Sentiment Bars */}
-          <div className="dash-row-3">
-            <div className="panel dash-panel-gauges">
-              <SentimentGauges clusters={data.clusters} />
+          {/* RIGHT: Article Feed (sticky sidebar) */}
+          <div className="dash-right">
+            <div className="dash-right-sticky">
+              <div className="panel">
+                <ArticlePanel clusters={data.clusters} />
+              </div>
             </div>
-            <div className="panel dash-panel-bars">
-              <SentimentBars clusters={data.clusters} />
-            </div>
-          </div>
-
-          {/* Row 4: Bias Heatmap (full width) */}
-          <div className="panel dash-panel-full">
-            <BiasHeatmap clusters={data.clusters} />
-          </div>
-
-          {/* Row 5: Article Feed (full width) */}
-          <div className="panel dash-panel-full">
-            <ArticlePanel clusters={data.clusters} />
           </div>
         </div>
       )}
@@ -90,22 +100,26 @@ export default function Dashboard() {
       {!data && !loading && !error && (
         <div className="dash-empty">
           <div className="dash-empty-visual">
-            <svg className="dash-empty-svg" viewBox="0 0 120 120" fill="none">
-              <circle cx="60" cy="60" r="55" stroke="url(#g1)" strokeWidth="2" strokeDasharray="6 4" opacity="0.4" />
-              <circle cx="60" cy="60" r="38" stroke="url(#g1)" strokeWidth="1.5" opacity="0.2" />
-              <circle cx="60" cy="60" r="8" fill="url(#g1)" opacity="0.8" />
-              <circle cx="60" cy="15" r="4" fill="#667eea" />
-              <circle cx="100" cy="45" r="4" fill="#a78bfa" />
-              <circle cx="95" cy="90" r="4" fill="#ec4899" />
-              <circle cx="25" cy="90" r="4" fill="#06b6d4" />
-              <circle cx="20" cy="45" r="4" fill="#10b981" />
-              <line x1="60" y1="15" x2="60" y2="52" stroke="#667eea" strokeWidth="1" opacity="0.35" />
-              <line x1="100" y1="45" x2="68" y2="58" stroke="#a78bfa" strokeWidth="1" opacity="0.35" />
-              <line x1="95" y1="90" x2="66" y2="65" stroke="#ec4899" strokeWidth="1" opacity="0.35" />
-              <line x1="25" y1="90" x2="54" y2="65" stroke="#06b6d4" strokeWidth="1" opacity="0.35" />
-              <line x1="20" y1="45" x2="52" y2="58" stroke="#10b981" strokeWidth="1" opacity="0.35" />
+            <svg className="dash-empty-svg" viewBox="0 0 200 200" fill="none">
+              <circle cx="100" cy="100" r="90" stroke="url(#g1)" strokeWidth="1" strokeDasharray="4 6" opacity="0.2" />
+              <circle cx="100" cy="100" r="65" stroke="url(#g1)" strokeWidth="0.8" opacity="0.12" />
+              <circle cx="100" cy="100" r="6" fill="url(#g1)" opacity="0.6" />
+              <circle cx="100" cy="100" r="12" stroke="url(#g1)" strokeWidth="0.5" opacity="0.3" />
+              <circle cx="100" cy="20" r="3.5" fill="#667eea" opacity="0.8" />
+              <circle cx="165" cy="60" r="3.5" fill="#a78bfa" opacity="0.8" />
+              <circle cx="155" cy="145" r="3.5" fill="#ec4899" opacity="0.8" />
+              <circle cx="45" cy="145" r="3.5" fill="#06b6d4" opacity="0.8" />
+              <circle cx="35" cy="60" r="3.5" fill="#10b981" opacity="0.8" />
+              <line x1="100" y1="20" x2="100" y2="88" stroke="#667eea" strokeWidth="0.6" opacity="0.2" />
+              <line x1="165" y1="60" x2="112" y2="95" stroke="#a78bfa" strokeWidth="0.6" opacity="0.2" />
+              <line x1="155" y1="145" x2="108" y2="108" stroke="#ec4899" strokeWidth="0.6" opacity="0.2" />
+              <line x1="45" y1="145" x2="92" y2="108" stroke="#06b6d4" strokeWidth="0.6" opacity="0.2" />
+              <line x1="35" y1="60" x2="88" y2="95" stroke="#10b981" strokeWidth="0.6" opacity="0.2" />
+              <line x1="100" y1="20" x2="165" y2="60" stroke="#667eea" strokeWidth="0.3" opacity="0.1" />
+              <line x1="165" y1="60" x2="155" y2="145" stroke="#a78bfa" strokeWidth="0.3" opacity="0.1" />
+              <line x1="35" y1="60" x2="45" y2="145" stroke="#10b981" strokeWidth="0.3" opacity="0.1" />
               <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="120" y2="120">
+                <linearGradient id="g1" x1="0" y1="0" x2="200" y2="200">
                   <stop offset="0%" stopColor="#667eea" />
                   <stop offset="100%" stopColor="#a78bfa" />
                 </linearGradient>
@@ -113,17 +127,34 @@ export default function Dashboard() {
             </svg>
           </div>
 
-          <h2 className="dash-empty-title">Start exploring narratives</h2>
+          <h2 className="dash-empty-title">Analyze any narrative</h2>
           <p className="dash-empty-desc">
-            Search any topic to discover media clusters, detect bias patterns, and reveal the stories behind the headlines.
+            Enter a topic above to uncover how different media sources frame the story — clusters, bias, and sentiment in real time.
           </p>
 
+          <div className="dash-stats-row">
+            <div className="dash-stat">
+              <span className="dash-stat-num">50+</span>
+              <span className="dash-stat-label">Sources analyzed</span>
+            </div>
+            <div className="dash-stat-divider"></div>
+            <div className="dash-stat">
+              <span className="dash-stat-num">5</span>
+              <span className="dash-stat-label">Analysis types</span>
+            </div>
+            <div className="dash-stat-divider"></div>
+            <div className="dash-stat">
+              <span className="dash-stat-num">Real-time</span>
+              <span className="dash-stat-label">Processing</span>
+            </div>
+          </div>
+
           <div className="dash-topics">
-            <h3 className="dash-topics-heading">Trending Topics</h3>
+            <h3 className="dash-topics-heading">Try a topic</h3>
             <div className="dash-chips">
-              {SUGGESTED_TOPICS.map((t) => (
-                <button key={t.label} className="dash-chip" onClick={() => runSearch(t.label)}>
-                  <span>{t.icon}</span> {t.label}
+              {SUGGESTED_TOPICS.map((topic) => (
+                <button key={topic} className="dash-chip" onClick={() => runSearch(topic)}>
+                  {topic}
                 </button>
               ))}
             </div>
@@ -131,19 +162,27 @@ export default function Dashboard() {
 
           <div className="dash-features">
             <div className="dash-feature">
-              <div className="dash-feature-icon">🧠</div>
+              <svg className="dash-feature-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3" /><circle cx="5" cy="6" r="2" /><circle cx="19" cy="6" r="2" /><circle cx="5" cy="18" r="2" /><circle cx="19" cy="18" r="2" />
+                <line x1="9.5" y1="10.5" x2="6.5" y2="7.5" /><line x1="14.5" y1="10.5" x2="17.5" y2="7.5" /><line x1="9.5" y1="13.5" x2="6.5" y2="16.5" /><line x1="14.5" y1="13.5" x2="17.5" y2="16.5" />
+              </svg>
               <h4>Neural Clustering</h4>
-              <p>Group related articles by semantic similarity to reveal narrative patterns.</p>
+              <p>Group articles by semantic similarity to reveal distinct narrative patterns.</p>
             </div>
             <div className="dash-feature">
-              <div className="dash-feature-icon">📊</div>
-              <h4>Bias Detection</h4>
-              <p>Identify media bias and sentiment across different sources and outlets.</p>
+              <svg className="dash-feature-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+              </svg>
+              <h4>Sentiment & Bias</h4>
+              <p>Measure sentiment and extremity across clusters to detect framing bias.</p>
             </div>
             <div className="dash-feature">
-              <div className="dash-feature-icon">🔗</div>
+              <svg className="dash-feature-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" />
+                <line x1="10" y1="6.5" x2="14" y2="6.5" /><line x1="6.5" y1="10" x2="6.5" y2="14" />
+              </svg>
               <h4>Source Mapping</h4>
-              <p>Trace how narratives propagate across the global media landscape.</p>
+              <p>See which outlets push which narratives with source-vs-cluster analysis.</p>
             </div>
           </div>
         </div>

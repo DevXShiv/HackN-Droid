@@ -12,7 +12,8 @@ export default function SentimentGauges({ clusters }) {
             <div className="gauges-grid">
                 {clusters.map((cluster, idx) => {
                     const raw = cluster.avg_sentiment; // 0–1 (0.5 = neutral)
-                    const angle = -90 + raw * 180; // -90 to +90 degrees
+                    // Map 0→left(negative), 0.5→up(neutral), 1→right(positive)
+                    const angleRad = (1 - raw) * Math.PI;
                     const label =
                         raw > 0.6 ? "Positive" : raw < 0.4 ? "Negative" : "Neutral";
                     const color =
@@ -55,8 +56,8 @@ export default function SentimentGauges({ clusters }) {
                                 <line
                                     x1="100"
                                     y1="110"
-                                    x2={100 + 60 * Math.cos((angle * Math.PI) / 180)}
-                                    y2={110 + 60 * Math.sin((angle * Math.PI) / 180)}
+                                    x2={100 + 60 * Math.cos(angleRad)}
+                                    y2={110 - 60 * Math.sin(angleRad)}
                                     stroke={color}
                                     strokeWidth="2.5"
                                     strokeLinecap="round"

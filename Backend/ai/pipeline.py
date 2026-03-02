@@ -4,6 +4,7 @@ from ai.services.sentiment_service import compute_cluster_sentiment
 from ai.services.bias_service import calculate_extremity
 from ai.services.query_expansion_service import expand_query
 from ai.services.cluster_label_service import generate_cluster_label
+from ai.services.summary_service import generate_unbiased_summary
 from sklearn.manifold import TSNE
 import numpy as np
 
@@ -130,7 +131,14 @@ def run_pipeline(query: str):
     # Step 10: Sort clusters by size
     final_clusters = sorted(final_clusters, key=lambda x: x["size"], reverse=True)
 
+    # Step 11: Generate unbiased summary from all article texts
+    all_texts = []
+    for a in articles:
+        all_texts.append(a["title"] + ". " + a.get("description", ""))
+    summary = generate_unbiased_summary(all_texts)
+
     return {
         "clusters": final_clusters,
-        "graph_nodes": graph_nodes
+        "graph_nodes": graph_nodes,
+        "summary": summary
     }
