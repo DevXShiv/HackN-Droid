@@ -3,7 +3,7 @@ from ai.services.clustering_service import generate_embeddings, cluster_articles
 from ai.services.sentiment_service import compute_cluster_sentiment
 from ai.services.bias_service import calculate_extremity
 from ai.services.query_expansion_service import expand_query
-
+from ai.services.cluster_label_service import generate_cluster_label
 
 def preprocess_query(query: str):
     return query.strip().lower()
@@ -47,11 +47,16 @@ def run_pipeline(query: str):
 
     # 🔹 Step 7: Sentiment + Extremity
     for cluster in clusters:
+
         avg_sentiment = compute_cluster_sentiment(cluster)
         extremity = calculate_extremity(avg_sentiment)
 
+        # 🔥 Generate label using Gemini
+        label = generate_cluster_label(cluster)
+
         final_clusters.append({
             "id": int(cluster["id"]),
+            "label": label,  # 👈 NEW FIELD
             "size": int(len(cluster["articles"])),
             "avg_sentiment": float(round(avg_sentiment, 3)),
             "extremity": float(round(extremity, 3)),
