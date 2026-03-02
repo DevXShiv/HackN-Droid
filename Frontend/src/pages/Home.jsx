@@ -9,17 +9,17 @@ const Home = () => {
       <div className="home-left">
         <div className="branding-content">
           <div className="logo-badge">Narrative AI</div>
-          <h1>
+          <h1 className="text1">
             The world’s news, <br />
-            <span>decoded in seconds.</span>
+            <span className="text2">decoded in seconds.</span>
           </h1>
-          <p>
+          <p id="text3">
             Join thousands of analysts using neural clustering to strip away
             media bias and find the core of every story.
           </p>
 
           {/* Subtle decorative element */}
-          <div className="glow-mesh"></div>
+          
         </div>
       </div>
 

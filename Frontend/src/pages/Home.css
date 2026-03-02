@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 40%, #24243e 100%);
+    background-image: url("/bg.png");
     position: relative;
     padding: 60px;
     overflow: hidden;
@@ -43,7 +43,7 @@
     font-size: 48px;
     font-weight: 700;
     line-height: 1.2;
-    color: #ffffff;
+    color: #fbfbfb;
     margin-bottom: 20px;
     letter-spacing: -0.5px;
 }
@@ -58,7 +58,7 @@
 .branding-content p {
     font-size: 17px;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(242, 241, 243, 0.974);
     max-width: 440px;
 }
 
