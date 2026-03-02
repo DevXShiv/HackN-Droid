@@ -2,6 +2,12 @@ import useSearch from "../features/search/useSearch";
 import SearchBar from "../features/search/SearchBar";
 import IntelligencePanel from "../features/intelligence/IntelligencePanel";
 import ArticlePanel from "../features/articles/ArticlePanel";
+import ClusterGraph from "../features/visualizations/ClusterGraph";
+import SentimentGauges from "../features/visualizations/SentimentGauges";
+import SourceDonut from "../features/visualizations/SourceDonut";
+import SentimentBars from "../features/visualizations/SentimentBars";
+import BiasHeatmap from "../features/visualizations/BiasHeatmap";
+import MediaGallery from "../features/visualizations/MediaGallery";
 
 const SUGGESTED_TOPICS = [
   { label: "AI Regulation", icon: "🤖" },
@@ -38,13 +44,43 @@ export default function Dashboard() {
       )}
 
       {/* Results */}
-      {data && !loading && (
-        <div className="dashboard-grid">
-          <div className="panel left-panel">
-            <IntelligencePanel clusters={data.clusters} />
+      {data && !loading && data.clusters && data.clusters.length > 0 && (
+        <div className="dash-results">
+          {/* Row 1: Cluster Graph (full width) */}
+          <ClusterGraph nodes={data.graph_nodes} />
+
+          {/* Media Gallery */}
+          <div className="panel dash-panel-full">
+            <MediaGallery clusters={data.clusters} />
           </div>
 
-          <div className="panel right-panel">
+          {/* Row 2: Intelligence + Source Donut */}
+          <div className="dash-row-2">
+            <div className="panel dash-panel-intel">
+              <IntelligencePanel clusters={data.clusters} />
+            </div>
+            <div className="panel dash-panel-donut">
+              <SourceDonut clusters={data.clusters} />
+            </div>
+          </div>
+
+          {/* Row 3: Sentiment Gauges + Sentiment Bars */}
+          <div className="dash-row-3">
+            <div className="panel dash-panel-gauges">
+              <SentimentGauges clusters={data.clusters} />
+            </div>
+            <div className="panel dash-panel-bars">
+              <SentimentBars clusters={data.clusters} />
+            </div>
+          </div>
+
+          {/* Row 4: Bias Heatmap (full width) */}
+          <div className="panel dash-panel-full">
+            <BiasHeatmap clusters={data.clusters} />
+          </div>
+
+          {/* Row 5: Article Feed (full width) */}
+          <div className="panel dash-panel-full">
             <ArticlePanel clusters={data.clusters} />
           </div>
         </div>

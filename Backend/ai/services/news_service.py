@@ -27,7 +27,9 @@ def fetch_articles(keyword: str, limit: int = 40):
                     "title": item["title"],
                     "description": item["description"],
                     "source": item["source"]["name"],
-                    "url": item["url"]
+                    "url": item["url"],
+                    "image": item.get("urlToImage", None),
+                    "publishedAt": item.get("publishedAt", None),
                 })
 
         return articles[:limit]

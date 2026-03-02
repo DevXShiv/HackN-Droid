@@ -22,7 +22,9 @@ def generate_embeddings(articles):
             "embedding": embeddings[i],
             "title": article["title"],
             "source": article["source"],
-            "url": article["url"]
+            "url": article["url"],
+            "image": article.get("image", None),
+            "publishedAt": article.get("publishedAt", None),
         })
 
     return enriched
