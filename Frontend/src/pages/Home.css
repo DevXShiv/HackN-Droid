@@ -1,0 +1,14 @@
+@media (max-width: 900px) {
+    .home-container {
+        flex-direction: column;
+    }
+
+    .home-left {
+        display: none; /* hide left side on mobile */
+    }
+
+    .home-right {
+        flex: 1;
+        width: 100%;
+    }
+}
