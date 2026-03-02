@@ -1,1 +1,112 @@
-@import "tailwindcss";
+/* ===== Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== Base Typography ===== */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f6f7f8;
+  color: #1a1a1b;
+  line-height: 1.5;
+}
+
+/* ===== Layout Container ===== */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* ===== Headings ===== */
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+/* ===== Flex Layout ===== */
+.dashboard-grid {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* ===== Panels ===== */
+.panel {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.left-panel {
+  flex: 2;
+}
+
+.right-panel {
+  flex: 1;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* ===== Article Item ===== */
+.article-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.article-item:last-child {
+  border-bottom: none;
+}
+
+.article-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.article-source {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ===== Metrics Row ===== */
+.metrics-row {
+  display: flex;
+  gap: 40px;
+  margin: 20px 0;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ===== Progress Bar ===== */
+.progress-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 6px;
+}
