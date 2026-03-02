@@ -23,7 +23,7 @@ export default function IntelligencePanel({ clusters }) {
         extremity={dominant.extremity}
       />
 
-      <hr style={{ margin: "24px 0", borderColor: "#eee" }} />
+      <hr />
 
       <h3 style={{ fontSize: "16px", marginBottom: "12px" }}>
         Narrative Distribution
